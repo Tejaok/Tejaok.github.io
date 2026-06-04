@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Teja Bharadwaz — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --white:    #ffffff;
+      --off:      #f7f6f3;
+      --paper:    #f0ede7;
+      --ink:      #111111;
+      --mid:      #555555;
+      --faint:    #cccccc;
+      --rule:     #e0ddd8;
+      --green:    #1f6b45;
+      --green-lt: #e8f3ed;
+      --green-md: #c4dece;
+      --amber:    #c97a1a;
+      --amber-lt: #fdf3e3;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lora', serif;
+      background: var(--white);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: radial-gradient(circle, #00000007 1px, transparent 1px);
+      background-size: 22px 22px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.93);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--rule);
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 4rem;
+      height: 60px;
+    }
+    .nav-brand {
+      display: flex; align-items: center; gap: 0.75rem;
+      text-decoration: none;
+    }
+    .nav-brand-box {
+      width: 32px; height: 32px;
+      background: var(--green);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .nav-brand-box span {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem; font-weight: 800;
+      color: #fff; letter-spacing: -0.02em;
+    }
+    .nav-brand-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem; font-weight: 700;
+      color: var(--ink);
+    }
+    .nav-links { display: flex; gap: 0; list-style: none; }
+    .nav-links a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--mid); text-decoration: none;
+      padding: 0 1.2rem; height: 60px;
+      display: flex; align-items: center;
+      border-left: 1px solid transparent;
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--green); background: var(--green-lt); }
+    .nav-links li:first-child a { border-left: 1px solid var(--rule); }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      padding-top: 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative; z-index: 1;
+    }
+
+    .hero-left {
+      padding: 7rem 4rem 5rem;
+      border-right: 1px solid var(--rule);
+      display: flex; flex-direction: column; justify-content: center;
+      background: var(--white);
+    }
+
+    .hero-index {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--green); margin-bottom: 2.5rem;
+      display: flex; align-items: center; gap: 0.8rem;
+      opacity: 0; animation: aUp 0.6s 0.2s forwards;
+    }
+    .hero-index::before {
+      content: '';
+      display: block; width: 32px; height: 1px; background: var(--green);
+    }
+
+    .hero-name {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(3.5rem, 5.5vw, 6.5rem);
+      font-weight: 800; line-height: 0.95;
+      letter-spacing: -0.03em; color: var(--ink);
+      margin-bottom: 1.8rem;
+      opacity: 0; animation: aUp 0.7s 0.35s forwards;
+    }
+    .hero-name .line2 {
+      display: block; color: var(--green);
+      font-style: italic; font-weight: 700;
+    }
+
+    .hero-desc {
+      font-size: 1rem; color: var(--mid); line-height: 1.8;
+      max-width: 440px; margin-bottom: 3rem;
+      border-left: 3px solid var(--green-md);
+      padding-left: 1.2rem;
+      opacity: 0; animation: aUp 0.7s 0.5s forwards;
+    }
+
+    .hero-cta {
+      display: flex; gap: 0.8rem; flex-wrap: wrap;
+      opacity: 0; animation: aUp 0.7s 0.65s forwards;
+    }
+    .btn {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.75rem 1.5rem; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      transition: all 0.22s;
+    }
+    .btn-solid { background: var(--green); color: #fff; }
+    .btn-solid:hover { background: #165737; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(31,107,69,0.25); }
+    .btn-line { border: 1.5px solid var(--rule); color: var(--mid); }
+    .btn-line:hover { border-color: var(--green); color: var(--green); }
+
+    .hero-right {
+      background: var(--off);
+      padding: 7rem 4rem 5rem;
+      display: flex; flex-direction: column; justify-content: center;
+      gap: 1.5rem;
+      opacity: 0; animation: aFade 0.8s 0.9s forwards;
+    }
+
+    .stat-strip {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--rule); background: var(--white);
+    }
+    .stat-cell {
+      padding: 1.4rem 1.2rem; text-align: center;
+      border-right: 1px solid var(--rule);
+    }
+    .stat-cell:last-child { border-right: none; }
+    .stat-n {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.2rem; font-weight: 800;
+      color: var(--green); line-height: 1;
+    }
+    .stat-l {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.56rem; color: var(--mid);
+      letter-spacing: 0.06em; margin-top: 0.3rem;
+      text-transform: uppercase;
+    }
+
+    .quick-stack {
+      background: var(--white); border: 1px solid var(--rule);
+      padding: 1.5rem;
+    }
+    .qs-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--mid); margin-bottom: 1rem;
+      padding-bottom: 0.6rem; border-bottom: 1px solid var(--rule);
+    }
+    .qs-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .qs-pill {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem; padding: 0.3rem 0.75rem;
+      border: 1px solid var(--rule); color: var(--mid);
+      background: var(--off); transition: all 0.2s;
+    }
+    .qs-pill.core { border-color: var(--green-md); color: var(--green); background: var(--green-lt); }
+
+    .availability {
+      background: var(--green); color: #fff;
+      padding: 1.2rem 1.5rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .avail-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: #7eedb4;
+      box-shadow: 0 0 0 3px rgba(126,237,180,0.3);
+      animation: pulse 2s infinite; flex-shrink: 0;
+    }
+    .avail-text {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.06em;
+    }
+    .avail-text strong { display: block; margin-bottom: 0.1rem; }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 3px rgba(126,237,180,0.3); }
+      50%       { box-shadow: 0 0 0 6px rgba(126,237,180,0.1); }
+    }
+
+    /* ─── SECTIONS ─── */
+    section { position: relative; z-index: 1; }
+    .sec-wrap { max-width: 1200px; margin: 0 auto; padding: 6rem 4rem; }
+
+    .sec-head {
+      display: grid; grid-template-columns: auto 1fr auto;
+      align-items: center; gap: 1.5rem; margin-bottom: 4rem;
+    }
+    .sec-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem; color: var(--green); letter-spacing: 0.1em; white-space: nowrap;
+    }
+    .sec-rule { height: 1px; background: var(--rule); }
+    .sec-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+      font-weight: 800; color: var(--ink);
+      letter-spacing: -0.02em; white-space: nowrap;
+    }
+
+    /* ─── ABOUT ─── */
+    #about { background: var(--white); border-bottom: 1px solid var(--rule); }
+
+    .about-grid {
+      display: grid; grid-template-columns: 1.6fr 1fr; gap: 5rem; align-items: start;
+    }
+    .about-body p {
+      font-size: 1rem; line-height: 1.9; color: #444; margin-bottom: 1.4rem;
+    }
+    .about-body p strong { color: var(--ink); font-weight: 500; }
+    .about-body p em { color: var(--green); font-style: italic; }
+
+    .about-aside { display: flex; flex-direction: column; }
+    .aside-row {
+      padding: 0.9rem 0; border-bottom: 1px solid var(--rule);
+      display: grid; grid-template-columns: 100px 1fr; gap: 1rem; align-items: start;
+    }
+    .aside-row:first-child { border-top: 1px solid var(--rule); }
+    .aside-key {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--mid); padding-top: 0.1rem;
+    }
+    .aside-val {
+      font-family: 'Lora', serif; font-size: 0.88rem; color: var(--ink); line-height: 1.5;
+    }
+    .aside-val a { color: var(--green); text-decoration: none; }
+    .aside-val a:hover { text-decoration: underline; }
+
+    /* ─── SKILLS ─── */
+    #skills { background: var(--off); border-bottom: 1px solid var(--rule); }
+
+    .skills-blocks {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--rule); background: var(--white);
+    }
+    .skill-block {
+      padding: 2rem; border-right: 1px solid var(--rule);
+      transition: background 0.2s;
+    }
+    .skill-block:last-child { border-right: none; }
+    .skill-block:hover { background: var(--green-lt); }
+    .sb-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem; color: var(--green); letter-spacing: 0.1em; margin-bottom: 0.6rem;
+    }
+    .sb-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 1.2rem;
+    }
+    .sb-items { display: flex; flex-direction: column; }
+    .sb-item {
+      font-size: 0.85rem; color: var(--mid);
+      padding: 0.55rem 0; border-bottom: 1px solid var(--rule);
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .sb-item:last-child { border-bottom: none; }
+    .sb-item::before {
+      content: ''; display: block; width: 6px; height: 6px;
+      background: var(--green); flex-shrink: 0;
+    }
+
+    .proficiency-row {
+      margin-top: 3rem;
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      border: 1px solid var(--rule); background: var(--white);
+    }
+    .prof-item {
+      padding: 1.2rem 1.5rem; border-right: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+    .prof-item:nth-child(2n)      { border-right: none; }
+    .prof-item:nth-last-child(-n+2) { border-bottom: none; }
+    .prof-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.68rem; color: var(--ink); letter-spacing: 0.04em;
+      margin-bottom: 0.6rem;
+      display: flex; justify-content: space-between;
+    }
+    .prof-label span { color: var(--green); }
+    .prof-bar { height: 4px; background: var(--rule); }
+    .prof-fill { height: 100%; background: var(--green); transition: width 1s ease; }
+
+    /* ─── PROJECTS ─── */
+    #projects { background: var(--white); border-bottom: 1px solid var(--rule); }
+
+    .proj-grid { display: flex; flex-direction: column; border: 1px solid var(--rule); }
+    .proj-card {
+      display: grid; grid-template-columns: 80px 1fr;
+      border-bottom: 1px solid var(--rule);
+      transition: background 0.2s;
+    }
+    .proj-card:last-child { border-bottom: none; }
+    .proj-card:hover { background: var(--off); }
+    .proj-card:hover .proj-arrow { transform: translate(3px, -3px); }
+
+    .proj-num-col {
+      background: var(--off); border-right: 1px solid var(--rule);
+      display: flex; align-items: flex-start; justify-content: center;
+      padding-top: 2.2rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem; color: var(--green); letter-spacing: 0.06em;
+      transition: background 0.2s;
+    }
+    .proj-card:hover .proj-num-col { background: var(--green-lt); }
+
+    .proj-body { padding: 2rem 2.5rem; }
+    .proj-top {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 0.8rem;
+    }
+    .proj-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.2rem; font-weight: 700; color: var(--ink);
+      letter-spacing: -0.01em; line-height: 1.2;
+    }
+    .proj-arrow {
+      font-size: 1.1rem; color: var(--green);
+      transition: transform 0.2s; flex-shrink: 0; margin-left: 1rem;
+    }
+    .proj-type-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--green); background: var(--green-lt);
+      border: 1px solid var(--green-md);
+      padding: 0.2rem 0.6rem; margin-bottom: 0.8rem;
+    }
+    .proj-date {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem; color: var(--mid); letter-spacing: 0.06em;
+      margin-bottom: 0.8rem;
+    }
+    .proj-desc {
+      font-size: 0.9rem; color: var(--mid); line-height: 1.75; margin-bottom: 1.2rem;
+    }
+    .proj-desc ul { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; padding: 0; }
+    .proj-desc li { padding-left: 1.1rem; position: relative; }
+    .proj-desc li::before {
+      content: '→'; position: absolute; left: 0;
+      color: var(--green); font-size: 0.75rem;
+    }
+    .proj-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .stack-badge {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.58rem; padding: 0.18rem 0.5rem;
+      border: 1px solid var(--rule); color: var(--mid); background: var(--off);
+    }
+
+    /* ─── EDUCATION ─── */
+    #education { background: var(--off); border-bottom: 1px solid var(--rule); }
+
+    .edu-list { display: flex; flex-direction: column; }
+    .edu-entry {
+      display: grid; grid-template-columns: 220px 1fr;
+      border: 1px solid var(--rule); margin-top: -1px;
+      background: var(--white); transition: background 0.2s;
+    }
+    .edu-entry:hover { background: var(--green-lt); }
+    .edu-left {
+      padding: 1.8rem; border-right: 1px solid var(--rule);
+      background: var(--off); display: flex; flex-direction: column; gap: 0.4rem;
+      transition: background 0.2s;
+    }
+    .edu-entry:hover .edu-left { background: var(--green-md); }
+    .edu-yr {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem; color: var(--green); letter-spacing: 0.06em;
+    }
+    .edu-badge {
+      display: inline-block; font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.55rem; letter-spacing: 0.08em; text-transform: uppercase;
+      background: var(--white); border: 1px solid var(--rule);
+      color: var(--mid); padding: 0.18rem 0.5rem; align-self: flex-start;
+    }
+    .edu-right { padding: 1.8rem 2rem; }
+    .edu-degree {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.05rem; font-weight: 700; color: var(--ink); margin-bottom: 0.3rem;
+    }
+    .edu-school {
+      font-family: 'Lora', serif; font-style: italic;
+      font-size: 0.85rem; color: var(--mid);
+    }
+    .edu-score {
+      display: inline-block; margin-top: 0.6rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem; padding: 0.2rem 0.5rem;
+      background: var(--green-lt); border: 1px solid var(--green-md); color: var(--green);
+    }
+
+    /* ─── CERTIFICATIONS ─── */
+    #certifications { background: var(--white); border-bottom: 1px solid var(--rule); }
+
+    .cert-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+    .cert-card {
+      border: 1px solid var(--rule); padding: 2rem;
+      background: var(--white); position: relative; overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .cert-card:hover { border-color: var(--green); transform: translateY(-3px); }
+    .cert-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--green), var(--green-md));
+      transform: scaleX(0); transition: transform 0.3s; transform-origin: left;
+    }
+    .cert-card:hover::before { transform: scaleX(1); }
+    .cert-icon { font-size: 1.6rem; margin-bottom: 0.8rem; }
+    .cert-tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--green); background: var(--green-lt);
+      border: 1px solid var(--green-md);
+      padding: 0.2rem 0.6rem; display: inline-block; margin-bottom: 0.8rem;
+    }
+    .cert-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.05rem; font-weight: 700; color: var(--ink);
+      margin-bottom: 0.4rem; line-height: 1.25;
+    }
+    .cert-issuer { font-size: 0.8rem; color: var(--mid); margin-bottom: 1rem; line-height: 1.5; }
+    .cert-date {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem; color: var(--green);
+      padding-top: 0.8rem; border-top: 1px solid var(--rule);
+    }
+    .cert-bullets {
+      list-style: none; display: flex; flex-direction: column; gap: 0.35rem;
+      margin-bottom: 1rem;
+    }
+    .cert-bullets li {
+      font-size: 0.8rem; color: var(--mid); padding-left: 1rem; position: relative;
+      line-height: 1.5;
+    }
+    .cert-bullets li::before {
+      content: '›'; position: absolute; left: 0; color: var(--green); font-weight: 700;
+    }
+
+    /* ─── EXTRA CURRICULAR ─── */
+    #extra { background: var(--off); border-bottom: 1px solid var(--rule); }
+
+    .extra-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+    .extra-card {
+      background: var(--white); border: 1px solid var(--rule);
+      padding: 1.8rem; transition: background 0.2s, border-color 0.2s;
+    }
+    .extra-card:hover { background: var(--green-lt); border-color: var(--green); }
+    .extra-icon { font-size: 1.4rem; margin-bottom: 0.7rem; }
+    .extra-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem; font-weight: 700; color: var(--ink); margin-bottom: 0.4rem;
+    }
+    .extra-desc { font-size: 0.8rem; color: var(--mid); line-height: 1.6; }
+
+    /* ─── CONTACT ─── */
+    #contact { background: var(--ink); }
+
+    .contact-inner {
+      max-width: 1200px; margin: 0 auto; padding: 6rem 4rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start;
+    }
+    .contact-kicker {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--green); margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+    .contact-kicker::before { content: ''; display: block; width: 24px; height: 1px; background: var(--green); }
+    .contact-headline {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 3.5vw, 3.2rem); font-weight: 800;
+      color: #fff; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 1.5rem;
+    }
+    .contact-headline em { color: var(--green); font-style: italic; font-weight: 700; }
+    .contact-sub { font-size: 0.9rem; color: #888; line-height: 1.7; }
+
+    .contact-right { display: flex; flex-direction: column; }
+    .contact-row {
+      display: grid; grid-template-columns: 48px 1fr;
+      border-bottom: 1px solid #222;
+      text-decoration: none; transition: background 0.2s;
+      padding: 1.3rem 0;
+    }
+    .contact-row:first-child { border-top: 1px solid #222; }
+    .contact-row:hover { background: rgba(31,107,69,0.08); }
+    .contact-row:hover .cr-value { color: var(--green); }
+    .cr-icon { font-size: 1.1rem; display: flex; align-items: center; justify-content: center; }
+    .cr-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: #555; margin-bottom: 0.2rem;
+    }
+    .cr-value { font-size: 0.88rem; color: #ddd; transition: color 0.2s; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #0a0a0a; border-top: 1px solid #1a1a1a;
+      padding: 1.5rem 4rem; position: relative; z-index: 1;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-l { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; color: #444; }
+    .footer-r {
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; color: #444;
+      text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .footer-r:hover { color: var(--green); }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes aUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes aFade { from { opacity: 0; } to { opacity: 1; } }
+
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 960px) {
+      nav { padding: 0 1.5rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .hero-left { padding: 5rem 1.5rem 3rem; }
+      .sec-wrap { padding: 4rem 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .skills-blocks { grid-template-columns: 1fr; }
+      .skill-block { border-right: none; border-bottom: 1px solid var(--rule); }
+      .proficiency-row { grid-template-columns: 1fr; }
+      .prof-item { border-right: none; }
+      .proj-card { grid-template-columns: 1fr; }
+      .proj-num-col { display: none; }
+      .edu-entry { grid-template-columns: 1fr; }
+      .edu-left { border-right: none; border-bottom: 1px solid var(--rule); }
+      .cert-grid { grid-template-columns: 1fr; }
+      .extra-grid { grid-template-columns: 1fr; }
+      .contact-inner { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 1.5rem; }
+      footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; }
+      .sec-head { grid-template-columns: auto 1fr; }
+      .sec-title { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-brand">
+    <div class="nav-brand-box"><span>TB</span></div>
+    <span class="nav-brand-name">Teja Bharadwaz</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#extra">Activities</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <p class="hero-index">MCA Student &mdash; Dayananda Sagar Institutions</p>
+    <h1 class="hero-name">
+      Teja
+      <span class="line2">Bharadwaz</span>
+    </h1>
+    <p class="hero-desc">
+      Motivated MCA student with a strong foundation in programming,
+      data handling, and web development. I apply analytical thinking to
+      real problems and learn new technologies fast &mdash; with or without
+      someone pointing the way.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-solid">View Projects &darr;</a>
+      <a href="#contact" class="btn btn-line">Get in Touch</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="stat-strip">
+      <div class="stat-cell">
+        <div class="stat-n">7.97</div>
+        <div class="stat-l">BCA<br>CGPA</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-n">2</div>
+        <div class="stat-l">Major<br>Projects</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-n">MCA</div>
+        <div class="stat-l">Pursuing<br>2025–27</div>
+      </div>
+    </div>
+
+    <div class="quick-stack">
+      <div class="qs-label">// Technical Stack</div>
+      <div class="qs-pills">
+        <span class="qs-pill core">Python</span>
+        <span class="qs-pill core">SQL</span>
+        <span class="qs-pill core">Java</span>
+        <span class="qs-pill core">HTML</span>
+        <span class="qs-pill">C Programming</span>
+        <span class="qs-pill">Data Structures</span>
+        <span class="qs-pill">K-Means Clustering</span>
+        <span class="qs-pill">Machine Learning</span>
+      </div>
+    </div>
+
+    <div class="availability">
+      <div class="avail-dot"></div>
+      <div class="avail-text">
+        <strong>Open to Opportunities</strong>
+        Software Dev &middot; Web Dev &middot; Data Handling &middot; Digital Ops
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="sec-wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">01 /</span>
+      <div class="sec-rule"></div>
+      <h2 class="sec-title">About Me</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-body reveal">
+        <p>
+          I'm <strong>Teja Bharadwaz</strong>, an MCA student at Dayananda Sagar Institutions,
+          Bangalore. My academic background spans both computer science fundamentals and
+          applied machine learning, backed by a BCA with a solid <em>7.97 CGPA</em> from
+          Presidency University.
+        </p>
+        <p>
+          My most significant work has been on <em>clustering global terrorism data using
+          machine learning</em> — taking a large, messy real-world dataset and finding
+          structure within it using K-Means. That project taught me not just the algorithms
+          but the patience and clarity that serious data work demands.
+        </p>
+        <p>
+          Alongside that, I've been actively self-learning <strong>SQL and database systems</strong>,
+          deepening my understanding of relational design, query optimization, and data
+          relationships. I combine technical ability with strong communication and
+          teamwork skills, and I hold an additional certification in <strong>Ethical Hacking</strong>.
+        </p>
+      </div>
+      <div class="about-aside reveal">
+        <div class="aside-row">
+          <span class="aside-key">Degree</span>
+          <span class="aside-val">MCA — Dayananda Sagar Institutions</span>
+        </div>
+        <div class="aside-row">
+          <span class="aside-key">Duration</span>
+          <span class="aside-val">2025 – 2027</span>
+        </div>
+        <div class="aside-row">
+          <span class="aside-key">Undergrad</span>
+          <span class="aside-val">BCA — Presidency University · CGPA 7.97</span>
+        </div>
+        <div class="aside-row">
+          <span class="aside-key">Location</span>
+          <span class="aside-val">Bangalore, India</span>
+        </div>
+        <div class="aside-row">
+          <span class="aside-key">Email</span>
+          <span class="aside-val"><a href="mailto:royalbharadwaz@gmail.com">royalbharadwaz@gmail.com</a></span>
+        </div>
+        <div class="aside-row">
+          <span class="aside-key">Phone</span>
+          <span class="aside-val"><a href="tel:+918328667916">+91 83286 67916</a></span>
+        </div>
+        <div class="aside-row">
+          <span class="aside-key">Status</span>
+          <span class="aside-val">Actively seeking Internships &amp; Entry-level Roles</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="sec-wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">02 /</span>
+      <div class="sec-rule"></div>
+      <h2 class="sec-title">Skills</h2>
+    </div>
+
+    <div class="skills-blocks reveal">
+      <div class="skill-block">
+        <div class="sb-num">// 01</div>
+        <div class="sb-title">Programming</div>
+        <div class="sb-items">
+          <div class="sb-item">Python</div>
+          <div class="sb-item">Java</div>
+          <div class="sb-item">C Programming</div>
+          <div class="sb-item">HTML</div>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="sb-num">// 02</div>
+        <div class="sb-title">Data &amp; Databases</div>
+        <div class="sb-items">
+          <div class="sb-item">SQL — Queries &amp; Joins</div>
+          <div class="sb-item">Data Structures</div>
+          <div class="sb-item">K-Means Clustering</div>
+          <div class="sb-item">Data Preprocessing</div>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="sb-num">// 03</div>
+        <div class="sb-title">Professional</div>
+        <div class="sb-items">
+          <div class="sb-item">Communication</div>
+          <div class="sb-item">Teamwork</div>
+          <div class="sb-item">Time Management</div>
+          <div class="sb-item">Adaptability</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proficiency-row reveal">
+      <div class="prof-item">
+        <div class="prof-label">Python <span>80%</span></div>
+        <div class="prof-bar"><div class="prof-fill" data-w="80" style="width:0%"></div></div>
+      </div>
+      <div class="prof-item">
+        <div class="prof-label">SQL <span>75%</span></div>
+        <div class="prof-bar"><div class="prof-fill" data-w="75" style="width:0%"></div></div>
+      </div>
+      <div class="prof-item">
+        <div class="prof-label">Java <span>70%</span></div>
+        <div class="prof-bar"><div class="prof-fill" data-w="70" style="width:0%"></div></div>
+      </div>
+      <div class="prof-item">
+        <div class="prof-label">HTML / Web <span>72%</span></div>
+        <div class="prof-bar"><div class="prof-fill" data-w="72" style="width:0%"></div></div>
+      </div>
+      <div class="prof-item">
+        <div class="prof-label">C Programming <span>68%</span></div>
+        <div class="prof-bar"><div class="prof-fill" data-w="68" style="width:0%"></div></div>
+      </div>
+      <div class="prof-item">
+        <div class="prof-label">Data Structures <span>65%</span></div>
+        <div class="prof-bar"><div class="prof-fill" data-w="65" style="width:0%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="sec-wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">03 /</span>
+      <div class="sec-rule"></div>
+      <h2 class="sec-title">Projects</h2>
+    </div>
+    <div class="proj-grid reveal">
+
+      <div class="proj-card">
+        <div class="proj-num-col">01</div>
+        <div class="proj-body">
+          <div class="proj-type-badge">Machine Learning &mdash; Unsupervised Learning</div>
+          <div class="proj-top">
+            <div class="proj-title">Clustering Global Terrorism Data<br>Using Machine Learning</div>
+            <span class="proj-arrow">↗</span>
+          </div>
+          <div class="proj-date">Jan 2025 – Apr 2025</div>
+          <div class="proj-desc">
+            <ul>
+              <li>Analyzed the Global Terrorism Dataset to identify hidden patterns and clusters across thousands of real-world incidents.</li>
+              <li>Applied K-Means clustering to classify incidents based on region, attack type, and casualties — surfacing geographic and tactical trends in the data.</li>
+              <li>Visualized cluster outputs to present findings in a readable and meaningful format, making raw numbers interpretable.</li>
+              <li>Worked with large, high-dimensional datasets and built skills in preprocessing, feature scaling, and unsupervised learning pipelines.</li>
+            </ul>
+          </div>
+          <div class="proj-stack">
+            <span class="stack-badge">Python</span>
+            <span class="stack-badge">K-Means Clustering</span>
+            <span class="stack-badge">Data Preprocessing</span>
+            <span class="stack-badge">Feature Scaling</span>
+            <span class="stack-badge">Data Visualization</span>
+            <span class="stack-badge">Unsupervised ML</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-num-col">02</div>
+        <div class="proj-body">
+          <div class="proj-type-badge">Web Development &mdash; PHP + MySQL</div>
+          <div class="proj-top">
+            <div class="proj-title">User Registration System<br>with PHP Backend</div>
+            <span class="proj-arrow">↗</span>
+          </div>
+          <div class="proj-date">Academic Project</div>
+          <div class="proj-desc">
+            <ul>
+              <li>Built a complete registration form with server-side PHP and MySQL database integration.</li>
+              <li>Implemented secure password hashing and form validation — both client-side and server-side.</li>
+              <li>Created a user listing page that queries and displays all registered records in a structured HTML table.</li>
+            </ul>
+          </div>
+          <div class="proj-stack">
+            <span class="stack-badge">PHP</span>
+            <span class="stack-badge">MySQL</span>
+            <span class="stack-badge">HTML</span>
+            <span class="stack-badge">CSS</span>
+            <span class="stack-badge">Bootstrap</span>
+            <span class="stack-badge">Form Validation</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="sec-wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">04 /</span>
+      <div class="sec-rule"></div>
+      <h2 class="sec-title">Education</h2>
+    </div>
+    <div class="edu-list">
+      <div class="edu-entry reveal">
+        <div class="edu-left">
+          <div class="edu-yr">2025 &ndash; 2027</div>
+          <div class="edu-badge">Pursuing</div>
+        </div>
+        <div class="edu-right">
+          <div class="edu-degree">Master of Computer Applications (MCA)</div>
+          <div class="edu-school">Dayananda Sagar Institutions, Bangalore</div>
+          <span class="edu-score">Computer Science</span>
+        </div>
+      </div>
+      <div class="edu-entry reveal">
+        <div class="edu-left">
+          <div class="edu-yr">2022 &ndash; 2025</div>
+          <div class="edu-badge">Completed</div>
+        </div>
+        <div class="edu-right">
+          <div class="edu-degree">Bachelor of Computer Applications (BCA)</div>
+          <div class="edu-school">Presidency University, Bangalore</div>
+          <span class="edu-score">CGPA: 7.97 / 10</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="sec-wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">05 /</span>
+      <div class="sec-rule"></div>
+      <h2 class="sec-title">Certifications</h2>
+    </div>
+    <div class="cert-grid">
+
+      <div class="cert-card reveal">
+        <div class="cert-icon">🗄️</div>
+        <div class="cert-tag">Self-Learning &mdash; Ongoing</div>
+        <div class="cert-title">SQL &amp; Database</div>
+        <div class="cert-issuer">W3Schools / YouTube &mdash; Virtual, Self-Paced</div>
+        <ul class="cert-bullets">
+          <li>Core SQL queries: SELECT, INSERT, UPDATE, DELETE</li>
+          <li>Table creation with CREATE TABLE; schema changes with ALTER</li>
+          <li>Constraints, primary keys, foreign keys, and table relationships</li>
+          <li>Solved query-based problems to reinforce understanding</li>
+        </ul>
+        <div class="cert-date">Sep 2025 &mdash; Present</div>
+      </div>
+
+      <div class="cert-card reveal" style="transition-delay:0.1s">
+        <div class="cert-icon">🔐</div>
+        <div class="cert-tag">Certification</div>
+        <div class="cert-title">Ethical Hacking</div>
+        <div class="cert-issuer">Additional Certification with SQL Proficiency</div>
+        <ul class="cert-bullets">
+          <li>Fundamentals of ethical hacking and cybersecurity practices</li>
+          <li>Applied SQL knowledge within a security context</li>
+          <li>Completed alongside multiple UG academic projects</li>
+        </ul>
+        <div class="cert-date">Completed</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EXTRA CURRICULAR -->
+<section id="extra">
+  <div class="sec-wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">06 /</span>
+      <div class="sec-rule"></div>
+      <h2 class="sec-title">Activities</h2>
+    </div>
+    <div class="extra-grid">
+      <div class="extra-card reveal">
+        <div class="extra-icon">🤝</div>
+        <div class="extra-title">Volunteering</div>
+        <div class="extra-desc">Volunteered in cultural and academic campus events, contributing to organizing and execution.</div>
+      </div>
+      <div class="extra-card reveal" style="transition-delay:0.08s">
+        <div class="extra-icon">💻</div>
+        <div class="extra-title">Webinars</div>
+        <div class="extra-desc">Attended webinars on software development and digital marketing, staying current with industry trends.</div>
+      </div>
+      <div class="extra-card reveal" style="transition-delay:0.16s">
+        <div class="extra-icon">🎯</div>
+        <div class="extra-title">Campus Leadership</div>
+        <div class="extra-desc">Organized and coordinated small campus activities, developing teamwork and time management skills.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="contact-left reveal">
+      <p class="contact-kicker">Open to Work</p>
+      <h2 class="contact-headline">Let's build<br>something <em>worth doing.</em></h2>
+      <p class="contact-sub">
+        Looking for internship opportunities and entry-level roles in software
+        development, web development, data handling, or digital operations.
+        I bring technical knowledge, adaptability, and a genuine drive to learn.
+      </p>
+    </div>
+    <div class="contact-right reveal">
+      <a href="mailto:royalbharadwaz@gmail.com" class="contact-row">
+        <span class="cr-icon">✉️</span>
+        <div>
+          <div class="cr-label">Email</div>
+          <div class="cr-value">royalbharadwaz@gmail.com</div>
+        </div>
+      </a>
+      <a href="tel:+918328667916" class="contact-row">
+        <span class="cr-icon">📞</span>
+        <div>
+          <div class="cr-label">Phone</div>
+          <div class="cr-value">+91 83286 67916</div>
+        </div>
+      </a>
+      <div class="contact-row" style="cursor:default">
+        <span class="cr-icon">📍</span>
+        <div>
+          <div class="cr-label">Location</div>
+          <div class="cr-value">Bangalore, India</div>
+        </div>
+      </div>
+      <div class="contact-row" style="cursor:default; border-bottom:none">
+        <span class="cr-icon">⚡</span>
+        <div>
+          <div class="cr-label">Availability</div>
+          <div class="cr-value">Internships &middot; Part-time &middot; Full-time</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-l">© 2025 Teja Bharadwaz &mdash; All rights reserved</span>
+  <a href="#" class="footer-r">↑ Top</a>
+</footer>
+
+<script>
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => revealObs.observe(el));
+
+  // Active nav
+  const allSecs  = document.querySelectorAll('section[id]');
+  const allLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let cur = '';
+    allSecs.forEach(s => { if (window.scrollY >= s.offsetTop - 80) cur = s.id; });
+    allLinks.forEach(l => {
+      const match = l.getAttribute('href') === '#' + cur;
+      l.style.color      = match ? 'var(--green)' : '';
+      l.style.background = match ? 'var(--green-lt)' : '';
+    });
+  });
+
+  // Skill bar animation
+  const barObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.prof-fill').forEach(bar => {
+          bar.style.width = bar.dataset.w + '%';
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.proficiency-row').forEach(el => barObs.observe(el));
+</script>
+</body>
+</html>
